@@ -23,7 +23,8 @@ public class HarborStarter {
         shipsList.add(new Ship("sh-3", 15));
 
         for (Ship ship : shipsList) {
-            ship.run();
+            ship.start();
+
         }
     }
 }
