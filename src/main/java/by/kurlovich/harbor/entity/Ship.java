@@ -4,11 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Random;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Ship extends Thread {
     private static final Logger LOGGER = LoggerFactory.getLogger(Dock.class);
+    private final Semaphore semaphore = new Semaphore(1, true);
     private static ReentrantLock lock = new ReentrantLock();
     Harbor harbor = Harbor.getInstance();
     private String shipName;
@@ -32,14 +34,14 @@ public class Ship extends Thread {
             while (!isDocked) {
                 for (Dock dock : harbor.getDocksList()) {
                     if (dock.getShipCapacity() > 0 && !isDocked) {
-                        lock.lock();
+                        semaphore.acquire();
                         dockShip(dock);
                         shipDock = dock;
                         dock.unloadShip(containers);
                         containers = dock.loadShip(maxContainers);
-                        TimeUnit.SECONDS.sleep(1);
+                        TimeUnit.MILLISECONDS.sleep(containers*100);
                         undockShip(shipDock);
-                        lock.unlock();
+                        semaphore.release();
                     }
                 }
             }
