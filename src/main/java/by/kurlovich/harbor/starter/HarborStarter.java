@@ -12,13 +12,13 @@ public class HarborStarter {
 
         Harbor harbor = Harbor.getInstance();
 
-        harbor.addDock(new Dock("d-1", 1));
+        harbor.addDock(new Dock("d-1", 1)); //dock name, max ships
         harbor.addDock(new Dock("d-2", 1));
         harbor.addDock(new Dock("d-3", 1));
 
         List<Ship> shipsList = new ArrayList<>();
 
-        shipsList.add(new Ship("sh-1", 20));
+        shipsList.add(new Ship("sh-1", 20)); //ship name, max containers capacity
         shipsList.add(new Ship("sh-2", 30));
         shipsList.add(new Ship("sh-3", 15));
 
